@@ -8,6 +8,10 @@ group = 'com.soonyong'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+bootJar {
+	mainClass = 'com.soonyong.hong.batch.SpringBatchApplication'
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
