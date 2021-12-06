@@ -1,4 +1,4 @@
-package com.soonyong.hong.batch.crawl;
+package com.soonyong.hong.batch.config.crwal;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;

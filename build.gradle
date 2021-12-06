@@ -23,11 +23,24 @@ repositories {
 }
 
 dependencies {
+
+	/** spring **/
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
-	compileOnly 'org.projectlombok:lombok'
+	
+	/** spring dev tool **/
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'mysql:mysql-connector-java'
+	
+	/** lombok **/
+	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	
+	/** database **/
+	runtimeOnly 'mysql:mysql-connector-java'
+	
+    /** jsoup **/
+    implementation group: 'org.jsoup', name: 'jsoup', version: '1.14.3'
+	
+	/** test **/
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.batch:spring-batch-test'
     testImplementation 'com.h2database:h2'
