@@ -16,22 +16,18 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 public class CrawlJobConfig {
 	private final JobBuilderFactory jobBuilderFactory;
-    private final StepBuilderFactory stepBuilderFactory;
+	private final StepBuilderFactory stepBuilderFactory;
 
-    @Bean
-    public Job simpleJob() {
-        return jobBuilderFactory.get("simpleJob")
-            .start(simpleStep())
-            .build();
-    }
+	@Bean
+	public Job simpleJob() {
+		return jobBuilderFactory.get("simpleJob").start(simpleStep()).build();
+	}
 
-    @Bean
-    public Step simpleStep() {
-        return stepBuilderFactory.get("simpleStep")
-            .tasklet((contribution, chunkContext) -> {
-                log.info(">>>>> job started >>>>>");
-                return RepeatStatus.FINISHED;
-            })
-            .build();
-    }
+	@Bean
+	public Step simpleStep() {
+		return stepBuilderFactory.get("simpleStep").tasklet((contribution, chunkContext) -> {
+			log.info(">>>>> job started >>>>>");
+			return RepeatStatus.FINISHED;
+		}).build();
+	}
 }
