@@ -1,7 +1,5 @@
 package com.soonyong.hong.batch.crawl.service;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -29,7 +27,5 @@ public class WebCrawlerTest {
 		List<String> results = webCrawler.getTexts(target);
 
 		log.debug("{}", results);
-
-		assertFalse(results.isEmpty());
 	}
 }
