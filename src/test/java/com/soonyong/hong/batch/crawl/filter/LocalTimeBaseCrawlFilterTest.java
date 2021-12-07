@@ -5,19 +5,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
-import com.soonyong.hong.batch.crawl.filter.LocalTimeBaseCrawlFilter.Type;
+import com.soonyong.hong.batch.crawl.filter.Impl.LocalTimeBaseStringComparater;
+import com.soonyong.hong.batch.crawl.filter.Impl.LocalTimeBaseStringComparater.Type;
 
 public class LocalTimeBaseCrawlFilterTest {
 
 	@Test
 	public void LocalTimeTest() {
-		CrawlFilter filter = LocalTimeBaseCrawlFilter.builder().formatter(DateTimeFormatter.ofPattern("HH-mm-ss"))
+		Predicate<String> filter = LocalTimeBaseStringComparater.builder().formatter(DateTimeFormatter.ofPattern("HH-mm-ss"))
 				.interval(10).unit(ChronoUnit.MINUTES).type(Type.AFTER).build();
 
-		assertTrue(filter.isAllowed("00-00-00"));
+		assertTrue(filter.test("00-00-00"));
 	}
 
 	@Test

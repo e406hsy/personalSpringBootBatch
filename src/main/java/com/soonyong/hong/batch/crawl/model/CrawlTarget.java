@@ -23,5 +23,4 @@ public class CrawlTarget {
 	private String url;
 	private String baseCssSeletor;
 	private String targetCssSeletor;
-	private String filterCssSelector;
 }

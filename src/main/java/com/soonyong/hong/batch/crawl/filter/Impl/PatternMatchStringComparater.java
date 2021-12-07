@@ -1,6 +1,6 @@
-package com.soonyong.hong.batch.crawl.filter;
+package com.soonyong.hong.batch.crawl.filter.Impl;
 
-import java.time.LocalTime;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import lombok.AccessLevel;
@@ -19,12 +19,12 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class PatternMatchFilter implements CrawlFilter {
+public class PatternMatchStringComparater implements Predicate<String> {
 
 	private Pattern pattern;
 
 	@Override
-	public boolean isAllowed(String value) {
+	public boolean test(String value) {
 
 		log.debug("is allowed called with value {}", value);
 		boolean result = pattern.matcher(value).matches();

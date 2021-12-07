@@ -6,11 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import com.soonyong.hong.batch.crawl.filter.CrawlFilterChain;
-import com.soonyong.hong.batch.crawl.filter.CrawlFilterChain.DelegateCondition;
-import com.soonyong.hong.batch.crawl.filter.LocalTimeBaseCrawlFilter;
-import com.soonyong.hong.batch.crawl.filter.LocalTimeBaseCrawlFilter.Type;
-import com.soonyong.hong.batch.crawl.filter.PatternMatchFilter;
+import com.soonyong.hong.batch.crawl.filter.Impl.CrawlFilterChain;
+import com.soonyong.hong.batch.crawl.filter.Impl.CrawlFilterChain.DelegateCondition;
+import com.soonyong.hong.batch.crawl.filter.Impl.LocalTimeBaseStringComparater;
+import com.soonyong.hong.batch.crawl.filter.Impl.LocalTimeBaseStringComparater.Type;
+import com.soonyong.hong.batch.crawl.filter.Impl.PatternMatchStringComparater;
+import com.soonyong.hong.batch.crawl.filter.Impl.SelectedTextFilterAdapter;
 import com.soonyong.hong.batch.crawl.model.CrawlTarget;
 
 public class CrawlTargetFactory {
@@ -22,23 +23,39 @@ public class CrawlTargetFactory {
 		add(CrawlTarget.builder().title("ppomppu")
 				.url("https://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu&hotlist_flag=999")
 				.baseCssSeletor("#revolution_main_table > tbody > tr[align=\"center\"]")
-				.filterCssSelector("td:nth-child(4) > nobr")
 				.filter(CrawlFilterChain.builder()
-						.delegate(PatternMatchFilter.builder().pattern(Pattern.compile("\\d\\d:\\d\\d:\\d\\d")).build())
+						.delegate(SelectedTextFilterAdapter.builder().cssSelector("td:nth-child(4) > nobr")
+								.delegate((value) -> PatternMatchStringComparater.builder()
+										.pattern(Pattern.compile("\\d\\d:\\d\\d:\\d\\d")).build()
+										.and(LocalTimeBaseStringComparater.builder()
+												.formatter(DateTimeFormatter.ofPattern("HH:mm:ss")).interval(8)
+												.unit(ChronoUnit.HOURS).type(Type.BEFORE).build())
+										.test(value))
+								.build())
 						.delegateCondition(DelegateCondition.AND)
-						.next(LocalTimeBaseCrawlFilter.builder().formatter(DateTimeFormatter.ofPattern("HH:mm:ss"))
-								.interval(12).unit(ChronoUnit.HOURS).type(Type.BEFORE).build())
+						.next(SelectedTextFilterAdapter.builder().cssSelector("td:nth-child(5)")
+								.delegate(PatternMatchStringComparater.builder()
+										.pattern(Pattern.compile("(1[5-9]|[2-9]\\d)\\s*-\\s*0")).build())
+								.build())
 						.build())
 				.targetCssSeletor("td:nth-child(3) > table > tbody > tr > td:nth-child(2) > div > a > font").build());
 		add(CrawlTarget.builder().title("ppomppu_foreign")
 				.url("https://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu4&hotlist_flag=999")
 				.baseCssSeletor("#revolution_main_table > tbody > tr[align=\"center\"]")
-				.filterCssSelector("td:nth-child(4) > nobr")
 				.filter(CrawlFilterChain.builder()
-						.delegate(PatternMatchFilter.builder().pattern(Pattern.compile("\\d\\d:\\d\\d:\\d\\d")).build())
+						.delegate(SelectedTextFilterAdapter.builder().cssSelector("td:nth-child(4) > nobr")
+								.delegate((value) -> PatternMatchStringComparater.builder()
+										.pattern(Pattern.compile("\\d\\d:\\d\\d:\\d\\d")).build()
+										.and(LocalTimeBaseStringComparater.builder()
+												.formatter(DateTimeFormatter.ofPattern("HH:mm:ss")).interval(8)
+												.unit(ChronoUnit.HOURS).type(Type.BEFORE).build())
+										.test(value))
+								.build())
 						.delegateCondition(DelegateCondition.AND)
-						.next(LocalTimeBaseCrawlFilter.builder().formatter(DateTimeFormatter.ofPattern("HH:mm:ss"))
-								.interval(12).unit(ChronoUnit.HOURS).type(Type.BEFORE).build())
+						.next(SelectedTextFilterAdapter.builder().cssSelector("td:nth-child(5)")
+								.delegate(PatternMatchStringComparater.builder()
+										.pattern(Pattern.compile("\\d\\d\\s*-\\s*0")).build())
+								.build())
 						.build())
 				.targetCssSeletor("td:nth-child(3) > table > tbody > tr > td:nth-child(2) > div > a > font").build());
 	}

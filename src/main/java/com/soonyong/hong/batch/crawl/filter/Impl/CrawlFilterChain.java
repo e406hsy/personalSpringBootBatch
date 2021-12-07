@@ -1,7 +1,11 @@
-package com.soonyong.hong.batch.crawl.filter;
+package com.soonyong.hong.batch.crawl.filter.Impl;
 
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
+
+import org.jsoup.nodes.Element;
+
+import com.soonyong.hong.batch.crawl.filter.CrawlFilter;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,7 +31,7 @@ public class CrawlFilterChain implements CrawlFilter {
 	private DelegateCondition delegateCondition;
 
 	@Override
-	public boolean isAllowed(String value) {
+	public boolean isAllowed(Element value) {
 		log.debug("is allowed called with value {}", value);
 		boolean result = this.delegateCondition.getPredicate(delegate, next).test(value);
 		log.debug("and result : {}", result);
@@ -38,9 +42,9 @@ public class CrawlFilterChain implements CrawlFilter {
 	public enum DelegateCondition {
 		AND((pre1, pre2) -> pre1.and(pre2)), OR((pre1, pre2) -> pre1.or(pre2));
 
-		private final BiFunction<Predicate<String>, Predicate<String>, Predicate<String>> predicateGenerator;
+		private final BiFunction<Predicate<Element>, Predicate<Element>, Predicate<Element>> predicateGenerator;
 
-		private Predicate<String> getPredicate(CrawlFilter delegate, CrawlFilter next) {
+		private Predicate<Element> getPredicate(CrawlFilter delegate, CrawlFilter next) {
 			return predicateGenerator.apply((input) -> delegate.isAllowed(input), (input) -> next.isAllowed(input));
 		}
 	}

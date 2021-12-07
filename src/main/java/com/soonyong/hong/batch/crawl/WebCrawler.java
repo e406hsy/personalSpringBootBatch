@@ -25,9 +25,7 @@ public class WebCrawler {
 			log.debug("getTexts: document = {}", document);
 			Elements elements = document.select(target.getBaseCssSeletor());
 			return elements.stream()
-					.filter(element -> StringUtils.hasText(target.getFilterCssSelector())
-							? target.getFilter().isAllowed(element.select(target.getFilterCssSelector()).text().trim())
-							: true)
+					.filter(element -> target.getFilter().isAllowed(element))
 					.map(element -> StringUtils.hasText(target.getTargetCssSeletor())
 							? element.select(target.getTargetCssSeletor()).text()
 							: element.text())
