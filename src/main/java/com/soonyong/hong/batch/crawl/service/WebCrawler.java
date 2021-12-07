@@ -1,4 +1,4 @@
-package com.soonyong.hong.batch.crawl;
+package com.soonyong.hong.batch.crawl.service;
 
 import java.io.IOException;
 import java.util.Collections;

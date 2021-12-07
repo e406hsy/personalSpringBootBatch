@@ -1,4 +1,4 @@
-package com.soonyong.hong.batch.crawl.filter;
+package com.soonyong.hong.batch.crawl.filter.impl;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

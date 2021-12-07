@@ -1,4 +1,4 @@
-package com.soonyong.hong.batch.crawl.filter;
+package com.soonyong.hong.batch.crawl.filter.impl;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -7,6 +7,7 @@ import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.soonyong.hong.batch.crawl.filter.CrawlFilter;
 import com.soonyong.hong.batch.crawl.filter.Impl.CrawlFilterChain;
 import com.soonyong.hong.batch.crawl.filter.Impl.CrawlFilterChain.DelegateCondition;
 

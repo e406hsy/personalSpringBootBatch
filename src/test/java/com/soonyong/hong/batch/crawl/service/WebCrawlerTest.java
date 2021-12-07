@@ -1,9 +1,8 @@
-package com.soonyong.hong.batch.crawl;
+package com.soonyong.hong.batch.crawl.service;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;

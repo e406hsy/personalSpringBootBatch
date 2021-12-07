@@ -4,9 +4,10 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.soonyong.hong.batch.crawl.job.WebCrawlTasklet;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,17 +18,16 @@ import lombok.extern.slf4j.Slf4j;
 public class CrawlJobConfig {
 	private final JobBuilderFactory jobBuilderFactory;
 	private final StepBuilderFactory stepBuilderFactory;
+	private final WebCrawlTasklet webCrawlTasklet;
+	private final Step notificationStep;
 
 	@Bean
-	public Job simpleJob() {
-		return jobBuilderFactory.get("simpleJob").start(simpleStep()).build();
+	public Job crawlJob() {
+		return jobBuilderFactory.get("crawlJob").start(webCrawlStep()).on("hook").to(notificationStep).end().build();
 	}
 
 	@Bean
-	public Step simpleStep() {
-		return stepBuilderFactory.get("simpleStep").tasklet((contribution, chunkContext) -> {
-			log.info(">>>>> job started >>>>>");
-			return RepeatStatus.FINISHED;
-		}).build();
+	public Step webCrawlStep() {
+		return stepBuilderFactory.get("firstStep").tasklet(webCrawlTasklet).build();
 	}
 }
