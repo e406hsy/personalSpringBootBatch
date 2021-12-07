@@ -1,3 +1,7 @@
 logging:
   level:
     root: debug
+    com:
+      soonyong: debug
+    org: 
+      springframework: info

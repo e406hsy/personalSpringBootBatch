@@ -33,7 +33,7 @@ public class WebCrawlTasklet implements Tasklet {
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		List<String> result = crawlService.getTexts(title);
 
-		log.debug("crawl result : {}", result);
+		log.info("crawl result : {}", result);
 		if (!result.isEmpty()) {
 			chunkContext.setAttribute(DoorayMessageNotificationTasklet.HOOK_URL_ATTRIBUTE_KEY, hookUrl);
 			chunkContext.setAttribute(DoorayMessageNotificationTasklet.HOOK_MESSAGE_ATTRIBUTE_KEY, result);
