@@ -33,7 +33,7 @@ public class DoorayMessageNotificationTaskletTest {
 		JobParameters jobParameters = jobLauncherTestUtils.getUniqueJobParameters();
 
 		// when
-		JobExecution jobExecution = jobLauncherTestUtils.launchStep("webCrawlStep", jobParameters);
+		JobExecution jobExecution = jobLauncherTestUtils.launchStep("notificationStep", jobParameters);
 
 		// then
 		assertEquals(ExitStatus.COMPLETED, jobExecution.getExitStatus());
