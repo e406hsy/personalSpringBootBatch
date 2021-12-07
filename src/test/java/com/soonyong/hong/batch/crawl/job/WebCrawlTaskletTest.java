@@ -2,8 +2,12 @@ package com.soonyong.hong.batch.crawl.job;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalTime;
+import java.time.ZoneId;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIf;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
@@ -24,7 +28,6 @@ public class WebCrawlTaskletTest {
 	@Autowired
 	private JobRepositoryTestUtils jobRepositoryTestUtils;
 
-	
 	@Autowired
 	private Job crawlJob;
 
@@ -34,12 +37,11 @@ public class WebCrawlTaskletTest {
 	}
 
 	@Test
+	@DisabledIf("timeCheck")
 	public void testJob() throws Exception {
 		// given
-		JobParameters jobParameters = jobLauncherTestUtils.getUniqueJobParametersBuilder()
-				.addString("title", "ppomppu")
-				.addString("hookUrl", "test.com")
-				.toJobParameters();
+		JobParameters jobParameters = jobLauncherTestUtils.getUniqueJobParametersBuilder().addString("title", "ppomppu")
+				.addString("hookUrl", "test.com").toJobParameters();
 
 		jobLauncherTestUtils.setJob(crawlJob);
 		// when
@@ -47,5 +49,10 @@ public class WebCrawlTaskletTest {
 
 		// then
 		assertEquals(ExitStatus.COMPLETED, jobExecution.getExitStatus());
+	}
+
+	public boolean timeCheck() {
+		
+		return LocalTime.now(ZoneId.of("Asia/Seoul")).getHour() < 5;
 	}
 }
