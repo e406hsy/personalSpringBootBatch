@@ -23,7 +23,8 @@ public class CrawlJobConfig {
 
 	@Bean
 	public Job crawlJob() {
-		return jobBuilderFactory.get("crawlJob").start(webCrawlStep()).on("hook").to(notificationStep).end().build();
+		return jobBuilderFactory.get("crawlJob").start(webCrawlStep()).on("hook").to(notificationStep)
+				.from(webCrawlStep()).on("COMPLETED").end().build().build();
 	}
 
 	@Bean
