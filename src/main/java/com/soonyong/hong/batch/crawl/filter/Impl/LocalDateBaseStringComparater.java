@@ -1,8 +1,8 @@
 package com.soonyong.hong.batch.crawl.filter.Impl;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.time.temporal.TemporalUnit;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 public class LocalDateBaseStringComparater implements Predicate<String> {
 
 	private DateTimeFormatter formatter;
-	private boolean allowInvalidPattern;
+	private ZoneId zoneId;
 	private int interval;
 	private TemporalUnit unit;
 	private Type type;
@@ -35,13 +35,11 @@ public class LocalDateBaseStringComparater implements Predicate<String> {
 	@Override
 	public boolean test(String value) {
 		LocalDate targetTime;
-		try {
-			targetTime = LocalDate.parse(value, formatter);
-		} catch (DateTimeParseException e) {
-			log.info("invalid pattern found", e);
-			return allowInvalidPattern;
-		}
-		return type.compare(LocalDate.now().plus(interval, unit), targetTime);
+		targetTime = LocalDate.parse(value, formatter);
+		log.debug("is allowed called with value {}", value);
+		boolean result = type.compare(LocalDate.now(zoneId).minus(interval, unit), targetTime);
+		log.debug("and result : {}", result);
+		return result;
 	}
 
 	@RequiredArgsConstructor

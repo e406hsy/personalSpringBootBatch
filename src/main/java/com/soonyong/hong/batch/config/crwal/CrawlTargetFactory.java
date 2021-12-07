@@ -1,5 +1,6 @@
 package com.soonyong.hong.batch.config.crwal;
 
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -29,7 +30,8 @@ public class CrawlTargetFactory {
 										.pattern(Pattern.compile("\\d\\d:\\d\\d:\\d\\d")).build()
 										.and(LocalTimeBaseStringComparater.builder()
 												.formatter(DateTimeFormatter.ofPattern("HH:mm:ss")).interval(8)
-												.unit(ChronoUnit.HOURS).type(Type.BEFORE).build())
+												.zoneId(ZoneId.of("Asia/Seoul")).unit(ChronoUnit.HOURS)
+												.type(Type.BEFORE).build())
 										.test(value))
 								.build())
 						.delegateCondition(DelegateCondition.AND)
@@ -48,7 +50,8 @@ public class CrawlTargetFactory {
 										.pattern(Pattern.compile("\\d\\d:\\d\\d:\\d\\d")).build()
 										.and(LocalTimeBaseStringComparater.builder()
 												.formatter(DateTimeFormatter.ofPattern("HH:mm:ss")).interval(8)
-												.unit(ChronoUnit.HOURS).type(Type.BEFORE).build())
+												.zoneId(ZoneId.of("Asia/Seoul")).unit(ChronoUnit.HOURS)
+												.type(Type.BEFORE).build())
 										.test(value))
 								.build())
 						.delegateCondition(DelegateCondition.AND)
