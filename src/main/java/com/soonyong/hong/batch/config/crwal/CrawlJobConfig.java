@@ -4,6 +4,7 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,8 +24,8 @@ public class CrawlJobConfig {
 
 	@Bean
 	public Job crawlJob() {
-		return jobBuilderFactory.get("crawlJob").start(webCrawlStep()).on("hook").to(notificationStep)
-				.from(webCrawlStep()).on("COMPLETED").end().build().build();
+		return jobBuilderFactory.get("crawlJob").incrementer(new RunIdIncrementer()).start(webCrawlStep()).on("hook")
+				.to(notificationStep).from(webCrawlStep()).on("COMPLETED").end().build().build();
 	}
 
 	@Bean
