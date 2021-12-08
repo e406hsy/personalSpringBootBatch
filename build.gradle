@@ -37,6 +37,9 @@ dependencies {
 	/** database **/
 	runtimeOnly 'mysql:mysql-connector-java'
 	
+	/** apache http component **/
+	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
+	
     /** jsoup **/
     implementation group: 'org.jsoup', name: 'jsoup', version: '1.14.3'
 	
