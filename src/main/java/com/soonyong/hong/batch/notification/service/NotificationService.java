@@ -1,6 +1,7 @@
 package com.soonyong.hong.batch.notification.service;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 import org.apache.http.HttpException;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -28,7 +29,7 @@ public class NotificationService {
 
 			httpPost.addHeader("Content-Type", "application/json");
 			httpPost.setEntity(new StringEntity(objectMapper
-					.writeValueAsString(NotificationRequest.builder().botName("My Noti").text(message).build())));
+					.writeValueAsString(NotificationRequest.builder().botName("My Noti").text(message).build()), Charset.forName("UTF-8")));
 			try (CloseableHttpResponse httpResponse = httpClient.execute(httpPost)) {
 				if (httpResponse.getStatusLine().getStatusCode() != 200) {
 					throw new HttpException("http failed with response : " + httpResponse);
