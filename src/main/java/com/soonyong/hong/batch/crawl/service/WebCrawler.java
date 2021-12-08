@@ -21,8 +21,8 @@ public class WebCrawler {
 
 	public List<String> getTexts(CrawlTarget target) {
 		try {
+			log.info("crawl target : {}", target);
 			Document document = Jsoup.connect(target.getUrl().toString()).get();
-			log.debug("getTexts: document = {}", document);
 			Elements elements = document.select(target.getBaseCssSeletor());
 			return elements.stream()
 					.filter(element -> target.getFilter().isAllowed(element))

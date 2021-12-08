@@ -1,6 +1,7 @@
+
 logging:
   level:
-    root: debug
+    root: info
     com:
       soonyong: debug
     org: 

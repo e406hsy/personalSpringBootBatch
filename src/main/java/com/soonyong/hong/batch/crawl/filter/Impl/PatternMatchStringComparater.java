@@ -26,7 +26,7 @@ public class PatternMatchStringComparater implements Predicate<String> {
 	@Override
 	public boolean test(String value) {
 
-		log.debug("is allowed called with value {}", value);
+		log.debug("is allowed called with pattern {} and value {}", pattern, value);
 		boolean result = pattern.matcher(value).matches();
 		log.debug("and result : {}", result);
 		return result;

@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
@@ -13,10 +15,13 @@ import org.springframework.batch.test.JobRepositoryTestUtils;
 import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @SpringBatchTest
+@ActiveProfiles("test")
 public class WebCrawlTaskletTest {
+	private static final Logger log = LoggerFactory.getLogger(WebCrawlTaskletTest.class);
 
 	@Autowired
 	private JobLauncherTestUtils jobLauncherTestUtils;
@@ -36,7 +41,7 @@ public class WebCrawlTaskletTest {
 	public void testJob() throws Exception {
 		// given
 		JobParameters jobParameters = jobLauncherTestUtils.getUniqueJobParametersBuilder().addString("title", "ppomppu")
-				.addString("hookUrl", "test.com").toJobParameters();
+				.toJobParameters();
 
 		jobLauncherTestUtils.setJob(crawlJob);
 		// when
