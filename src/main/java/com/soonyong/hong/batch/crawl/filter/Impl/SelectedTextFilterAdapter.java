@@ -29,7 +29,7 @@ public class SelectedTextFilterAdapter implements CrawlFilter {
 
 	@Override
 	public boolean isAllowed(Element value) {
-		return delegate.test(value.select(cssSelector).text());
+		return delegate.test(value.select(cssSelector).text().trim());
 	}
 
 }
